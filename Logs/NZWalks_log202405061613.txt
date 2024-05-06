@@ -1,0 +1,98 @@
+2024-05-06 16:13:14.174 +05:30 [INF] Executed DbCommand (3,175ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [NZWalksDb];
+2024-05-06 16:13:14.271 +05:30 [INF] Executed DbCommand (61ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [NZWalksDb] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2024-05-06 16:13:19.364 +05:30 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2024-05-06 16:13:29.097 +05:30 [INF] Executed DbCommand (9,680ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2024-05-06 16:13:29.124 +05:30 [INF] Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2024-05-06 16:13:29.142 +05:30 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2024-05-06 16:13:29.153 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2024-05-06 16:13:29.166 +05:30 [INF] Applying migration '20240430072746_InitialMigration'.
+2024-05-06 16:13:29.199 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Difficulties] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Difficulties] PRIMARY KEY ([Id])
+);
+2024-05-06 16:13:29.204 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Regions] (
+    [Id] uniqueidentifier NOT NULL,
+    [Code] nvarchar(max) NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [RegionImageUrl] nvarchar(max) NULL,
+    CONSTRAINT [PK_Regions] PRIMARY KEY ([Id])
+);
+2024-05-06 16:13:29.208 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Walks] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [LengthInKm] float NOT NULL,
+    [WalkImageUrl] nvarchar(max) NULL,
+    [DifficultyId] uniqueidentifier NOT NULL,
+    [RegionId] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_Walks] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Walks_Difficulties_DifficultyId] FOREIGN KEY ([DifficultyId]) REFERENCES [Difficulties] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Walks_Regions_RegionId] FOREIGN KEY ([RegionId]) REFERENCES [Regions] ([Id]) ON DELETE CASCADE
+);
+2024-05-06 16:13:29.271 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Walks_DifficultyId] ON [Walks] ([DifficultyId]);
+2024-05-06 16:13:29.272 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Walks_RegionId] ON [Walks] ([RegionId]);
+2024-05-06 16:13:29.279 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240430072746_InitialMigration', N'8.0.4');
+2024-05-06 16:13:29.285 +05:30 [INF] Applying migration '20240430130502_Seed-Data for Difficulties and regions'.
+2024-05-06 16:13:29.354 +05:30 [INF] Executed DbCommand (41ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Name') AND [object_id] = OBJECT_ID(N'[Difficulties]'))
+    SET IDENTITY_INSERT [Difficulties] ON;
+INSERT INTO [Difficulties] ([Id], [Name])
+VALUES ('25a40027-f82d-4f0a-af0e-7981826379cd', N'Medium'),
+('a65165d3-293e-4756-be70-10bd10304099', N'Easy');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Name') AND [object_id] = OBJECT_ID(N'[Difficulties]'))
+    SET IDENTITY_INSERT [Difficulties] OFF;
+2024-05-06 16:13:29.391 +05:30 [INF] Executed DbCommand (37ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Code', N'Name', N'RegionImageUrl') AND [object_id] = OBJECT_ID(N'[Regions]'))
+    SET IDENTITY_INSERT [Regions] ON;
+INSERT INTO [Regions] ([Id], [Code], [Name], [RegionImageUrl])
+VALUES ('21f6b252-7f56-44b7-90ae-a8a92e2e3107', N'AKL', N'Auckland', N'region-image-url'),
+('72d9505e-9442-4255-be1a-36f6d012bce2', N'DND', N'Dunedin', N'region-image-url');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Code', N'Name', N'RegionImageUrl') AND [object_id] = OBJECT_ID(N'[Regions]'))
+    SET IDENTITY_INSERT [Regions] OFF;
+2024-05-06 16:13:30.843 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240430130502_Seed-Data for Difficulties and regions', N'8.0.4');
+2024-05-06 16:13:30.844 +05:30 [INF] Applying migration '20240503100145_Adding Image Table'.
+2024-05-06 16:13:30.850 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240503100145_Adding Image Table', N'8.0.4');
+2024-05-06 16:13:30.851 +05:30 [INF] Applying migration '20240503101050_AddImages'.
+2024-05-06 16:13:30.856 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240503101050_AddImages', N'8.0.4');
+2024-05-06 16:13:30.857 +05:30 [INF] Applying migration '20240506065630_Img'.
+2024-05-06 16:13:30.861 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240506065630_Img', N'8.0.4');
+2024-05-06 16:13:30.862 +05:30 [INF] Applying migration '20240506103053_Image Added'.
+2024-05-06 16:13:30.867 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240506103053_Image Added', N'8.0.4');
+2024-05-06 16:13:30.868 +05:30 [INF] Applying migration '20240506104235_NewDb'.
+2024-05-06 16:13:30.873 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240506104235_NewDb', N'8.0.4');

@@ -1,0 +1,33 @@
+2024-05-06 15:30:42.193 +05:30 [INF] User profile is available. Using 'C:\Users\ishwa\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-05-06 15:30:42.623 +05:30 [INF] Now listening on: https://localhost:7130
+2024-05-06 15:30:42.625 +05:30 [INF] Now listening on: http://localhost:5130
+2024-05-06 15:30:42.631 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2024-05-06 15:30:42.633 +05:30 [INF] Hosting environment: Development
+2024-05-06 15:30:42.635 +05:30 [INF] Content root path: D:\New folder\NZWalks\NZWalksAPI
+2024-05-06 15:30:49.771 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7130/swagger/index.html - null null
+2024-05-06 15:30:49.995 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7130/swagger/index.html - 200 null text/html;charset=utf-8 230.3217ms
+2024-05-06 15:30:50.037 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7130/_vs/browserLink - null null
+2024-05-06 15:30:50.037 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7130/_framework/aspnetcore-browser-refresh.js - null null
+2024-05-06 15:30:50.052 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7130/_framework/aspnetcore-browser-refresh.js - 200 13756 application/javascript; charset=utf-8 15.6827ms
+2024-05-06 15:30:50.087 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7130/_vs/browserLink - 200 null text/javascript; charset=UTF-8 50.4641ms
+2024-05-06 15:30:50.147 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7130/swagger/v1/swagger.json - null null
+2024-05-06 15:30:50.194 +05:30 [INF] Request starting HTTP/1.1 GET https://localhost:7130/api/walks - null null
+2024-05-06 15:30:50.370 +05:30 [INF] Executing endpoint 'NZWalksAPI.Controllers.WalksController.GetAll (NZWalksAPI)'
+2024-05-06 15:30:50.414 +05:30 [INF] Route matched with {action = "GetAll", controller = "Walks"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll(System.String, System.String, System.String, System.Nullable`1[System.Boolean], Int32, Int32) on controller NZWalksAPI.Controllers.WalksController (NZWalksAPI).
+2024-05-06 15:30:50.488 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7130/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 341.3272ms
+2024-05-06 15:30:51.734 +05:30 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2024-05-06 15:30:51.737 +05:30 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2024-05-06 15:30:52.378 +05:30 [INF] Executed DbCommand (77ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Description], [t].[DifficultyId], [t].[LengthInKm], [t].[Name], [t].[RegionId], [t].[WalkImageUrl], [d].[Id], [d].[Name], [r].[Id], [r].[Code], [r].[Name], [r].[RegionImageUrl]
+FROM (
+    SELECT [w].[Id], [w].[Description], [w].[DifficultyId], [w].[LengthInKm], [w].[Name], [w].[RegionId], [w].[WalkImageUrl]
+    FROM [Walks] AS [w]
+    ORDER BY (SELECT 1)
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Difficulties] AS [d] ON [t].[DifficultyId] = [d].[Id]
+INNER JOIN [Regions] AS [r] ON [t].[RegionId] = [r].[Id]
+2024-05-06 15:30:52.493 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[NZWalksAPI.Models.DTO.WalkDTO, NZWalksAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-05-06 15:30:52.518 +05:30 [INF] Executed action NZWalksAPI.Controllers.WalksController.GetAll (NZWalksAPI) in 2095.5061ms
+2024-05-06 15:30:52.521 +05:30 [INF] Executed endpoint 'NZWalksAPI.Controllers.WalksController.GetAll (NZWalksAPI)'
+2024-05-06 15:30:52.532 +05:30 [INF] Request finished HTTP/1.1 GET https://localhost:7130/api/walks - 200 null application/json; charset=utf-8 2338.5247ms

@@ -1,0 +1,6 @@
+2024-05-06 16:21:58.940 +05:30 [INF] User profile is available. Using 'C:\Users\ishwa\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-05-06 16:21:59.316 +05:30 [INF] Now listening on: https://localhost:7130
+2024-05-06 16:21:59.318 +05:30 [INF] Now listening on: http://localhost:5130
+2024-05-06 16:21:59.321 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2024-05-06 16:21:59.323 +05:30 [INF] Hosting environment: Development
+2024-05-06 16:21:59.324 +05:30 [INF] Content root path: D:\New folder\NZWalks\NZWalksAPI

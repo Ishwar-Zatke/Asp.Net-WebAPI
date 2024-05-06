@@ -1,0 +1,2 @@
+2024-05-06 16:00:59.947 +05:30 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
